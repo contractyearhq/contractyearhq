@@ -1,1 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contract Year — Show Your Work.</title>
+<meta name="description" content="NFL and NBA contracts rated with a finance lens. Pay Him. Fair Deal. Overpaid. Dead Money. Show your work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #0F6E56;
+  --green-lite: #1D9E75;
+  --green-pale: #9FE1CB;
+  --dark: #111111;
+  --dark2: #181818;
+  --dark3: #1e1e1e;
+  --dark4: #242424;
+  --red: #E24B4A;
+  --white: #F5F2EC;
+  --white-dim: #9a9894;
+  --white-dimmer: #555550;
+  --border: #2a2a2a;
+}
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark);
+  color: var(--white);
+  font-family: 'Barlow', sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  background: rgba(17,17,17,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--white);
+  cursor: pointer;
+  text-decoration: none;
+}
+.nav-logo span { color: var(--green-lite); }
+
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--white-dim);
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+.nav-ig {
+  background: var(--green);
+  color: white !important;
+  padding: 8px 18px;
+  border-radius: 2px;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+.nav-ig:hover { background: var(--green-lite) !important; color: white !important; }
+
+/* ─── PAGES ───────────────────────────────────────────────── */
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ─── HOME HERO ───────────────────────────────────────────── */
+.hero {
+  padding: 100px 40px 60px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 120px,
+    rgba(15,110,86,0.03) 120px,
+    rgba(15,110,86,0.03) 121px
+  );
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--green-lite);
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(72px, 10vw, 130px);
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 28px;
+}
+.hero-title .accent { color: var(--green-lite); }
+.hero-title .dim { color: var(--white-dimmer); }
+
+.hero-desc {
+  max-width: 520px;
+  font-size: 18px; color: var(--white-dim);
+  line-height: 1.65; margin-bottom: 40px;
+}
+
+.verdict-row {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px;
+}
+.verdict-chip {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700; font-size: 14px; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 8px 18px;
+  border: 1px solid; border-radius: 2px;
+}
+.vc-pay { border-color: var(--green); color: var(--green); }
+.vc-fair { border-color: #1a6080; color: #4aabcc; }
+.vc-over { border-color: var(--red); color: var(--red); }
+.vc-dead { border-color: #555; color: var(--white-dimmer); }
+
+.hero-stat-row { display: flex; gap: 48px; }
+.hero-stat-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px; font-weight: 800; color: var(--white);
+  line-height: 1;
+}
+.hero-stat-lbl { font-size: 12px; color: var(--white-dimmer); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ─── SECTION HEADER ──────────────────────────────────────── */
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 48px 40px 24px;
+  border-bottom: 1px solid var(--border);
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--white-dimmer);
+}
+.section-count { font-size: 13px; color: var(--white-dimmer); }
+
+/* ─── FILTER BAR ──────────────────────────────────────────── */
+.filter-bar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--dark2);
+}
+.filter-search {
+  flex: 1; min-width: 200px;
+  background: var(--dark3); border: 1px solid var(--border);
+  color: var(--white); font-family: 'Barlow', sans-serif;
+  font-size: 14px; padding: 10px 16px; border-radius: 2px;
+  outline: none; transition: border-color 0.15s;
+}
+.filter-search::placeholder { color: var(--white-dimmer); }
+.filter-search:focus { border-color: var(--green); }
+.filter-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 8px 16px;
+  border: 1px solid var(--border); border-radius: 2px;
+  background: transparent; color: var(--white-dimmer);
+  cursor: pointer; transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--white-dim); color: var(--white); }
+.filter-btn.active { color: white; }
+.filter-btn.all.active { background: var(--green); border-color: var(--green); }
+.filter-btn.pay.active { background: #007A33; border-color: #007A33; }
+.filter-btn.fair.active { background: #1a6080; border-color: #1a6080; }
+.filter-btn.over.active { background: var(--red); border-color: var(--red); }
+.filter-btn.dead.active { background: #3a3a3a; border-color: #666; }
+.filter-btn.nfl.active { background: #1a3060; border-color: #3060a0; }
+.filter-btn.nba.active { background: #1a0060; border-color: #6030c0; }
+.filter-divider { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+.filter-results {
+  font-size: 12px; color: var(--white-dimmer);
+  letter-spacing: 0.04em; white-space: nowrap; margin-left: auto;
+}
+.no-results {
+  display: none; padding: 80px 40px; text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.no-results-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 800; text-transform: uppercase;
+  color: var(--white-dimmer); margin-bottom: 8px;
+}
+.no-results-sub { font-size: 14px; color: var(--white-dimmer); }
+@media (max-width: 768px) {
+  .filter-bar { padding: 16px 20px; gap: 10px; }
+  .filter-results { width: 100%; margin-left: 0; }
+}
+
+/* ─── ARTICLE GRID ────────────────────────────────────────── */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.article-card {
+  background: var(--dark);
+  padding: 32px;
+  cursor: pointer;
+  transition: background 0.15s;
+  position: relative;
+  overflow: hidden;
+}
+.article-card:hover { background: var(--dark2); }
+.article-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--card-accent, var(--green));
+  opacity: 0; transition: opacity 0.15s;
+}
+.article-card:hover::before { opacity: 1; }
+
+.card-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.card-league {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white-dimmer);
+}
+.card-verdict {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 3px 10px;
+  border-radius: 2px;
+}
+.cv-pay { background: rgba(15,110,86,0.2); color: var(--green-pale); }
+.cv-fair { background: rgba(26,96,128,0.2); color: #4aabcc; }
+.cv-over { background: rgba(226,75,74,0.15); color: var(--red); }
+.cv-dead { background: rgba(85,85,80,0.2); color: #999; }
+
+.card-amount {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 42px; font-weight: 900;
+  line-height: 1; color: var(--white);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.card-player {
+  font-size: 14px; font-weight: 500; color: var(--white-dim);
+  margin-bottom: 14px;
+}
+.card-desc {
+  font-size: 14px; color: var(--white-dimmer);
+  line-height: 1.55; margin-bottom: 20px;
+}
+.card-read {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--green-lite);
+  text-decoration: none;
+}
+
+/* ─── FEATURED ARTICLE ────────────────────────────────────── */
+.featured-card {
+  grid-column: 1 / -1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; background: var(--dark);
+  cursor: pointer; transition: background 0.15s;
+  position: relative; overflow: hidden;
+}
+.featured-card:hover { background: var(--dark2); }
+.featured-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--card-accent, var(--green));
+}
+.featured-left {
+  padding: 48px 48px 48px 52px;
+  border-right: 1px solid var(--border);
+}
+.featured-right { padding: 48px; display: flex; flex-direction: column; justify-content: space-between; }
+.featured-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--green-lite);
+  margin-bottom: 16px;
+}
+.featured-amount {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(64px, 8vw, 96px);
+  font-weight: 900; line-height: 0.95;
+  color: var(--white); margin-bottom: 12px; letter-spacing: -0.01em;
+}
+.featured-player {
+  font-size: 16px; font-weight: 500; color: var(--white-dim);
+  margin-bottom: 20px;
+}
+.featured-desc {
+  font-size: 16px; color: var(--white-dimmer);
+  line-height: 1.6; max-width: 400px;
+}
+.featured-stats { display: flex; flex-direction: column; gap: 16px; }
+.fstat {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.fstat:last-child { border-bottom: none; padding-bottom: 0; }
+.fstat-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px; font-weight: 800; color: var(--white); line-height: 1;
+}
+.fstat-lbl { font-size: 12px; color: var(--white-dimmer); margin-top: 2px; }
+
+/* ─── ARTICLE VIEW ────────────────────────────────────────── */
+.article-view { display: none; padding-top: 64px; }
+.article-view.active { display: block; }
+
+.article-hero {
+  padding: 64px 40px 48px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.article-hero::before {
+  content: '';
+  position: absolute; top: 64px; left: 0;
+  width: 4px; height: calc(100% - 64px);
+  background: var(--article-accent, var(--green));
+}
+
+.article-back {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white-dimmer);
+  cursor: pointer; margin-bottom: 32px; display: inline-flex;
+  align-items: center; gap: 8px; transition: color 0.15s;
+  background: none; border: none; padding: 0;
+}
+.article-back:hover { color: var(--white); }
+
+.article-eyebrow {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+}
+.article-league {
+  font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--white-dimmer);
+}
+
+.article-amount {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(72px, 12vw, 140px);
+  font-weight: 900; line-height: 0.9;
+  color: var(--white); letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.article-headline {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700; line-height: 1.1;
+  color: var(--white-dim); margin-bottom: 24px;
+  max-width: 700px;
+}
+
+.article-byline {
+  font-size: 13px; color: var(--white-dimmer);
+  letter-spacing: 0.04em;
+}
+
+/* Article content */
+.article-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 40px 80px;
+}
+
+.article-content h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--white); margin: 48px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.article-content h2 .h-accent { color: var(--article-accent, var(--green-lite)); }
+
+.article-content p {
+  font-size: 17px; line-height: 1.75;
+  color: var(--white-dim); margin-bottom: 22px;
+}
+.article-content strong { color: var(--white); font-weight: 600; }
+
+/* Stats block */
+.stats-block {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border);
+  margin: 32px 0;
+}
+.stat-cell {
+  background: var(--dark2); padding: 24px 20px;
+  text-align: center;
+}
+.stat-cell-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 36px; font-weight: 800;
+  color: var(--white); line-height: 1;
+}
+.stat-cell-lbl {
+  font-size: 11px; color: var(--white-dimmer);
+  margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* Pull quote */
+.pull-quote {
+  border-left: 3px solid var(--article-accent, var(--green));
+  padding: 20px 0 20px 28px;
+  margin: 36px 0;
+}
+.pull-quote p {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 26px; font-weight: 600;
+  line-height: 1.3; color: var(--white) !important;
+  margin: 0;
+}
+
+/* Show your work box */
+.work-box {
+  background: var(--article-accent-bg, #0a1f17);
+  border: 1px solid var(--article-accent, var(--green));
+  padding: 32px; margin: 36px 0;
+}
+.work-box-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--article-accent, var(--green-pale));
+  margin-bottom: 16px;
+}
+.work-box-number {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 64px; font-weight: 900;
+  color: var(--white); line-height: 1; margin-bottom: 8px;
+}
+.work-box-desc { font-size: 15px; color: var(--white-dim); line-height: 1.6; }
+
+/* Verdict box */
+.verdict-box {
+  background: var(--dark3); border: 1px solid var(--border);
+  padding: 32px; margin: 36px 0;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.verdict-box-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--white-dimmer); margin-bottom: 8px;
+}
+.verdict-box-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 52px; font-weight: 900;
+  text-transform: uppercase; line-height: 1;
+}
+.verdict-box-desc { font-size: 15px; color: var(--white-dim); max-width: 380px; line-height: 1.6; }
+
+.engage-row {
+  border-top: 1px solid var(--border);
+  padding-top: 24px; margin-top: 24px;
+  font-size: 14px; color: var(--white-dimmer);
+}
+.engage-row strong { color: var(--white); }
+
+/* ─── RATINGS PAGE ────────────────────────────────────────── */
+.ratings-page { min-height: 100vh; }
+.ratings-header {
+  padding: 64px 40px 40px;
+  border-bottom: 1px solid var(--border);
+}
+.ratings-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 80px; font-weight: 900;
+  text-transform: uppercase; line-height: 0.9;
+  margin-bottom: 16px;
+}
+.ratings-title span { color: var(--green-lite); }
+.ratings-desc { font-size: 16px; color: var(--white-dim); max-width: 500px; }
+
+.ratings-table { border-bottom: 1px solid var(--border); }
+.ratings-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 120px;
+  gap: 0; border-bottom: 1px solid var(--border);
+  transition: background 0.12s; cursor: pointer;
+}
+.ratings-row:hover { background: var(--dark2); }
+.ratings-row.header { cursor: default; }
+.ratings-row.header:hover { background: transparent; }
+.ratings-cell {
+  padding: 18px 24px;
+  font-size: 14px; color: var(--white-dim);
+  display: flex; align-items: center;
+  border-right: 1px solid var(--border);
+}
+.ratings-cell:last-child { border-right: none; }
+.ratings-cell.header-cell {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--white-dimmer);
+  padding: 12px 24px;
+}
+.ratings-player { font-size: 15px; font-weight: 600; color: var(--white); }
+.ratings-team { font-size: 12px; color: var(--white-dimmer); margin-top: 2px; }
+.ratings-amount {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 800; color: var(--white);
+}
+
+/* ─── ABOUT PAGE ──────────────────────────────────────────── */
+.about-page { min-height: 100vh; }
+.about-hero {
+  padding: 80px 40px 60px;
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+.about-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 80px; font-weight: 900;
+  text-transform: uppercase; line-height: 0.9;
+  margin-bottom: 24px;
+}
+.about-title span { color: var(--green-lite); }
+.about-tagline {
+  font-size: 20px; color: var(--white-dim);
+  line-height: 1.6; margin-bottom: 32px;
+}
+.about-body { font-size: 16px; color: var(--white-dim); line-height: 1.75; }
+.about-body p { margin-bottom: 20px; }
+.about-body strong { color: var(--white); }
+
+.about-pillars {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pillar {
+  background: var(--dark); padding: 36px 32px;
+}
+.pillar-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 48px; font-weight: 900;
+  color: var(--green); line-height: 1; margin-bottom: 12px;
+}
+.pillar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 700;
+  text-transform: uppercase; color: var(--white); margin-bottom: 10px;
+}
+.pillar-desc { font-size: 14px; color: var(--white-dimmer); line-height: 1.6; }
+
+/* ─── FOOTER ──────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px;
+}
+.footer-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900; font-size: 18px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.footer-brand span { color: var(--green-lite); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a {
+  font-size: 12px; color: var(--white-dimmer);
+  text-decoration: none; letter-spacing: 0.06em;
+  text-transform: uppercase; transition: color 0.15s;
+}
+.footer-links a:hover { color: var(--white); }
+.footer-right { font-size: 12px; color: var(--white-dimmer); }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { gap: 16px; }
+  .hero, .section-header, .article-content { padding-left: 20px; padding-right: 20px; }
+  .hero { padding-top: 48px; }
+  .featured-card { grid-template-columns: 1fr; }
+  .featured-left { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 24px; }
+  .featured-right { padding: 24px; }
+  .articles-grid { grid-template-columns: 1fr; }
+  .stats-block { grid-template-columns: 1fr 1fr; }
+  .about-hero { grid-template-columns: 1fr; gap: 32px; }
+  .about-pillars { grid-template-columns: 1fr; }
+  .ratings-row { grid-template-columns: 1fr 1fr; }
+  .ratings-cell:nth-child(3), .ratings-cell:nth-child(4) { display: none; }
+  footer { flex-direction: column; align-items: flex-start; }
+  .article-hero { padding-left: 24px; padding-right: 24px; }
+}
+
+/* ─── ANIMATIONS ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page.active .hero-title,
+.page.active .hero-desc,
+.page.active .verdict-row,
+.page.active .hero-stat-row {
+  animation: fadeUp 0.5s ease both;
+}
+.page.active .hero-title { animation-delay: 0.05s; }
+.page.active .hero-desc { animation-delay: 0.12s; }
+.page.active .verdict-row { animation-delay: 0.18s; }
+.page.active .hero-stat-row { animation-delay: 0.24s; }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════ -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')" href="#">Contract <span>Year</span></a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" href="#">Home</a>
+    <a onclick="showPage('ratings')" href="#">Ratings</a>
+    <a onclick="showPage('about')" href="#">About</a>
+    <a class="nav-ig" href="https://instagram.com/contractyearhq" target="_blank">@contractyearhq</a>
+  </div>
+</nav>
+
+<!-- ═══ HOME PAGE ══════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-eyebrow">NFL + NBA · Contract Analysis · Since 2025</div>
+    <h1 class="hero-title">
+      Contract<br>
+      <span class="accent">Year.</span>
+    </h1>
+    <p class="hero-desc">Every deal gets a verdict. No vibes. No hot takes without receipts. We follow the money so you don't have to.</p>
+    <div class="verdict-row">
+      <span class="verdict-chip vc-pay">Pay Him</span>
+      <span class="verdict-chip vc-fair">Fair Deal</span>
+      <span class="verdict-chip vc-over">Overpaid</span>
+      <span class="verdict-chip vc-dead">Dead Money</span>
+    </div>
+    <div class="hero-stat-row">
+      <div>
+        <div class="hero-stat-num">8</div>
+        <div class="hero-stat-lbl">Contracts Rated</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$1.8B+</div>
+        <div class="hero-stat-lbl">In Contracts Analyzed</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-lbl">Takes Without Receipts</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest -->
+  <div class="section-header">
+    <span class="section-title">Latest Ratings</span>
+    <span class="section-count" id="total-count">8 contracts rated</span>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <input class="filter-search" type="text" id="search-input" placeholder="Search player name..." oninput="runFilters()">
+    <div class="filter-divider"></div>
+    <div class="filter-group" id="verdict-filters">
+      <button class="filter-btn all active" data-verdict="all" onclick="setFilter('verdict','all',this)">All</button>
+      <button class="filter-btn pay" data-verdict="pay" onclick="setFilter('verdict','pay',this)">Pay Him</button>
+      <button class="filter-btn fair" data-verdict="fair" onclick="setFilter('verdict','fair',this)">Fair Deal</button>
+      <button class="filter-btn over" data-verdict="over" onclick="setFilter('verdict','over',this)">Overpaid</button>
+      <button class="filter-btn dead" data-verdict="dead" onclick="setFilter('verdict','dead',this)">Dead Money</button>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group" id="sport-filters">
+      <button class="filter-btn all active" data-sport="all" onclick="setFilter('sport','all',this)">All Sports</button>
+      <button class="filter-btn nfl" data-sport="nfl" onclick="setFilter('sport','nfl',this)">NFL</button>
+      <button class="filter-btn nba" data-sport="nba" onclick="setFilter('sport','nba',this)">NBA</button>
+    </div>
+    <span class="filter-results" id="filter-results">Showing 8 of 8</span>
+  </div>
+
+  <div class="articles-grid" id="articles-grid">
+
+    <!-- Featured: Jaylen Brown -->
+    <div class="featured-card" style="--card-accent:#007A33"
+         data-verdict="fair" data-sport="nba" data-player="jaylen brown"
+         onclick="showArticle('brown')">
+      <div class="featured-left">
+        <div class="featured-label">Featured · NBA · Boston Celtics</div>
+        <div class="featured-amount">$304M</div>
+        <div class="featured-player">Jaylen Brown — 5 years, fully guaranteed</div>
+        <div class="featured-desc">The largest contract in NBA history. A Finals MVP in year one. A career-low in year two. And $69M still owed in the final year. We ran the numbers — here's where this deal actually stands.</div>
+      </div>
+      <div class="featured-right">
+        <div class="featured-stats">
+          <div class="fstat">
+            <div class="fstat-val" style="color:#007A33">Fair Deal</div>
+            <div class="fstat-lbl">Our verdict</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-val">$2.13M</div>
+            <div class="fstat-lbl">Per win share · 2025-26</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-val">22.2 PPG</div>
+            <div class="fstat-lbl">Year 1 on supermax · career low</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-val">$69.1M</div>
+            <div class="fstat-lbl">Final year salary · 2028-29</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Watson -->
+    <div class="article-card" style="--card-accent:#FF3C00"
+         data-verdict="dead" data-sport="nfl" data-player="deshaun watson"
+         onclick="showArticle('watson')">
+      <div class="card-meta">
+        <span class="card-league">NFL · Cleveland Browns</span>
+        <span class="card-verdict cv-dead">Dead Money</span>
+      </div>
+      <div class="card-amount">$230M</div>
+      <div class="card-player">Deshaun Watson — 5 years, fully guaranteed</div>
+      <div class="card-desc">12 games played. $230M owed. No exit. The Browns signed history's only fully guaranteed NFL quarterback deal — and it's become the worst contract in modern football.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+    <!-- Barkley -->
+    <div class="article-card" style="--card-accent:#004C54"
+         data-verdict="pay" data-sport="nfl" data-player="saquon barkley"
+         onclick="showArticle('barkley')">
+      <div class="card-meta">
+        <span class="card-league">NFL · Philadelphia Eagles</span>
+        <span class="card-verdict cv-pay">Pay Him</span>
+      </div>
+      <div class="card-amount">$37.75M/yr</div>
+      <div class="card-player">Saquon Barkley — 3 years, $113M</div>
+      <div class="card-desc">Every analyst said paying a running back this much was insane. Then he ran for 2,005 yards, won the rushing title, and cashed a Super Bowl check. The math tells a different story.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+    <!-- Curry -->
+    <div class="article-card" style="--card-accent:#FFC72C"
+         data-verdict="fair" data-sport="nba" data-player="steph curry stephen curry"
+         onclick="showArticle('curry')">
+      <div class="card-meta">
+        <span class="card-league">NBA · Golden State Warriors</span>
+        <span class="card-verdict cv-fair">Fair Deal</span>
+      </div>
+      <div class="card-amount">$59.6M</div>
+      <div class="card-player">Steph Curry — age 37, final year salary</div>
+      <div class="card-desc">The greatest shooter alive is 37 years old and eating 38% of Golden State's cap. Is this a legend tax — or is the franchise still getting value? We break down the math.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+    <!-- Luka -->
+    <div class="article-card" style="--card-accent:#552583"
+         data-verdict="pay" data-sport="nba" data-player="luka doncic"
+         onclick="showArticle('luka')">
+      <div class="card-meta">
+        <span class="card-league">NBA · Los Angeles Lakers</span>
+        <span class="card-verdict cv-pay">Pay Him</span>
+      </div>
+      <div class="card-amount">$346M</div>
+      <div class="card-player">Luka Doncic — 5 years, new team, same bag</div>
+      <div class="card-desc">The biggest contract in NBA history, now in Los Angeles. 26 years old. Career averages of 26/8/8. The contract isn't the problem — but the roster around it might be.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+    <!-- Tyreek -->
+    <div class="article-card" style="--card-accent:#008E97"
+         data-verdict="over" data-sport="nfl" data-player="tyreek hill"
+         onclick="showArticle('tyreek')">
+      <div class="card-meta">
+        <span class="card-league">NFL · Miami Dolphins · Bad Math</span>
+        <span class="card-verdict cv-over">Overpaid</span>
+      </div>
+      <div class="card-amount">$40,924</div>
+      <div class="card-player">Tyreek Hill — per receiving yard, last 7 games</div>
+      <div class="card-desc">17 catches in his last 7 games. $30M per year. And he wants a raise. We ran the cost-per-yard math and the number that came back was ugly. This is Bad Math at its purest.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+    <!-- Parsons -->
+    <div class="article-card" style="--card-accent:#869397"
+         data-verdict="watch" data-sport="nfl" data-player="micah parsons"
+         onclick="showArticle('parsons')">
+      <div class="card-meta">
+        <span class="card-league">NFL · Dallas Cowboys · Contract Watch</span>
+        <span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch This Space</span>
+      </div>
+      <div class="card-amount">$42M/yr</div>
+      <div class="card-player">Micah Parsons — our fair value estimate</div>
+      <div class="card-desc">57 sacks in 4 years. The fastest to 50 in NFL history. He wants $45M+. We built the comp model from scratch and landed on a number. Cowboys history says they'll drag it out, then pay anyway.</div>
+      <span class="card-read">Read the breakdown →</span>
+    </div>
+
+  </div>
+
+  <!-- No results state -->
+  <div class="no-results" id="no-results">
+    <div class="no-results-title">No contracts found</div>
+    <div class="no-results-sub">Try a different filter or search term</div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Contract <span>Year</span></div>
+    <div class="footer-links">
+      <a onclick="showPage('home')" href="#">Home</a>
+      <a onclick="showPage('ratings')" href="#">Ratings</a>
+      <a onclick="showPage('about')" href="#">About</a>
+      <a href="https://instagram.com/contractyearhq" target="_blank">Instagram</a>
+    </div>
+    <div class="footer-right">@contractyearhq · Show your work.</div>
+  </footer>
+</div>
+
+<!-- ═══ RATINGS PAGE ════════════════════════════════════════════ -->
+<div class="page" id="page-ratings">
+  <div class="ratings-header">
+    <div class="ratings-title">All<br><span>Ratings</span></div>
+    <p class="ratings-desc">Every contract we've rated, with our verdict. Click any row to read the full breakdown.</p>
+  </div>
+  <div class="ratings-table">
+    <div class="ratings-row header">
+      <div class="ratings-cell header-cell">Player</div>
+      <div class="ratings-cell header-cell">Value</div>
+      <div class="ratings-cell header-cell">League</div>
+      <div class="ratings-cell header-cell">Year</div>
+      <div class="ratings-cell header-cell">Verdict</div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('brown')">
+      <div class="ratings-cell"><div><div class="ratings-player">Jaylen Brown</div><div class="ratings-team">Boston Celtics</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$304M</div></div>
+      <div class="ratings-cell">NBA</div>
+      <div class="ratings-cell">2023</div>
+      <div class="ratings-cell"><span class="card-verdict cv-fair">Fair Deal</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('watson')">
+      <div class="ratings-cell"><div><div class="ratings-player">Deshaun Watson</div><div class="ratings-team">Cleveland Browns</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$230M</div></div>
+      <div class="ratings-cell">NFL</div>
+      <div class="ratings-cell">2022</div>
+      <div class="ratings-cell"><span class="card-verdict cv-dead">Dead Money</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('barkley')">
+      <div class="ratings-cell"><div><div class="ratings-player">Saquon Barkley</div><div class="ratings-team">Philadelphia Eagles</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$113M</div></div>
+      <div class="ratings-cell">NFL</div>
+      <div class="ratings-cell">2024</div>
+      <div class="ratings-cell"><span class="card-verdict cv-pay">Pay Him</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('curry')">
+      <div class="ratings-cell"><div><div class="ratings-player">Steph Curry</div><div class="ratings-team">Golden State Warriors</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$215M</div></div>
+      <div class="ratings-cell">NBA</div>
+      <div class="ratings-cell">2023</div>
+      <div class="ratings-cell"><span class="card-verdict cv-fair">Fair Deal</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('luka')">
+      <div class="ratings-cell"><div><div class="ratings-player">Luka Doncic</div><div class="ratings-team">Los Angeles Lakers</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$346M</div></div>
+      <div class="ratings-cell">NBA</div>
+      <div class="ratings-cell">2024</div>
+      <div class="ratings-cell"><span class="card-verdict cv-pay">Pay Him</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('tyreek')">
+      <div class="ratings-cell"><div><div class="ratings-player">Tyreek Hill</div><div class="ratings-team">Miami Dolphins</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$120M</div></div>
+      <div class="ratings-cell">NFL</div>
+      <div class="ratings-cell">2022</div>
+      <div class="ratings-cell"><span class="card-verdict cv-over">Overpaid</span></div>
+    </div>
+    <div class="ratings-row" onclick="showArticle('parsons')">
+      <div class="ratings-cell"><div><div class="ratings-player">Micah Parsons</div><div class="ratings-team">Dallas Cowboys</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">TBD</div></div>
+      <div class="ratings-cell">NFL</div>
+      <div class="ratings-cell">2025</div>
+      <div class="ratings-cell"><span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch</span></div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">Contract <span>Year</span></div>
+    <div class="footer-links">
+      <a onclick="showPage('home')" href="#">Home</a>
+      <a onclick="showPage('ratings')" href="#">Ratings</a>
+      <a onclick="showPage('about')" href="#">About</a>
+    </div>
+    <div class="footer-right">@contractyearhq · Show your work.</div>
+  </footer>
+</div>
+
+<!-- ═══ ABOUT PAGE ═════════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div>
+      <div class="about-title">Show<br>Your<br><span>Work.</span></div>
+    </div>
+    <div>
+      <p class="about-tagline">Most sports media has opinions. We have spreadsheets.</p>
+      <div class="about-body">
+        <p>Contract Year was built on a simple frustration: sports media loves to call contracts good or bad, but almost nobody <strong>shows the math</strong>.</p>
+        <p>We come from finance. We know what it looks like when someone is overpaying for an asset, when a deal is genuinely undervalued, and when a front office has locked itself into a bad position for years. We apply that lens to NFL and NBA contracts — and we publish the work so you can check it yourself.</p>
+        <p>Every post ends with a verdict: <strong>Pay Him, Fair Deal, Overpaid, or Dead Money.</strong> We pick one. We defend it. And we welcome the argument in the comments — because that's the point.</p>
+        <p>Contract Year is <strong>@contractyearhq</strong> on Instagram. New ratings drop every Monday, Wednesday, and Friday during the season.</p>
+      </div>
+    </div>
+  </div>
+  <div class="about-pillars">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <div class="pillar-title">Evidence First</div>
+      <div class="pillar-desc">Lead with the number, the stat, or the contract detail. The take follows the data — never the other way around.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <div class="pillar-title">Verdicts, Not Debates</div>
+      <div class="pillar-desc">We don't "explore both sides." We rate it, defend it, and stand behind it. Opinions are welcome in the comments.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <div class="pillar-title">Sharp, Not Savage</div>
+      <div class="pillar-desc">Wit over snark. We punch at front office decisions, not players personally. Performance is fair game. Character is off-limits.</div>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">04</div>
+      <div class="pillar-title">Accessible Complexity</div>
+      <div class="pillar-desc">Finance brain, fan language. Cap space, not "liquidity." Extension, not "amortization." Smart but never smug.</div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">Contract <span>Year</span></div>
+    <div class="footer-links">
+      <a onclick="showPage('home')" href="#">Home</a>
+      <a onclick="showPage('ratings')" href="#">Ratings</a>
+      <a href="https://instagram.com/contractyearhq" target="_blank">Instagram</a>
+    </div>
+    <div class="footer-right">@contractyearhq · Show your work.</div>
+  </footer>
+</div>
+
+<!-- ═══ ARTICLE VIEWS ═══════════════════════════════════════════ -->
+
+<!-- Jaylen Brown -->
+<div class="article-view" id="article-brown" style="--article-accent:#007A33; --article-accent-bg:#0a1f12">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NBA · Boston Celtics · July 2023</span>
+      <span class="card-verdict cv-fair">Fair Deal</span>
+    </div>
+    <div class="article-amount">$304M.</div>
+    <div class="article-headline">The biggest contract in NBA history. Was it worth it?</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">5 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$304M</div><div class="stat-cell-lbl">Total value</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$60.8M</div><div class="stat-cell-lbl">Per year</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$69.1M</div><div class="stat-cell-lbl">Final year, 2028-29</div></div>
+    </div>
+    <p>In July 2023, Jaylen Brown signed the largest contract in NBA history — five years, $304 million, fully guaranteed, no player option. The Celtics had no real choice. Let him walk into free agency and you hand your competitor a top-10 player. Pay him what he earned — All-NBA honors, 26.6 points per game — and you keep your core intact.</p>
+    <p>So they paid. And then year one happened.</p>
+    <h2><span class="h-accent">The Bull Case</span> — why Boston pulled the trigger</h2>
+    <p>Brown averaged 26.6 points and 6.9 rebounds in the season he earned this deal. He made second-team All-NBA. He was 26 years old. He was the co-centerpiece of a legitimate championship contender — and he proved that by winning Finals MVP in 2024, the first season of the supermax.</p>
+    <p>The Celtics had zero leverage. No comparable trade offer would have improved Boston's title window. Walking away meant handing a prime-years Jaylen Brown to a rival for nothing.</p>
+    <div class="pull-quote"><p>"At 26 with All-NBA credentials, you pay the number. That part isn't complicated."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — the red flags you can't ignore</h2>
+    <p>Year one of the supermax: 22.2 points per game. Career low. His three-point percentage dropped to 32%. For a player earning $52M that season, the production-to-cost math wasn't pretty.</p>
+    <p>The real concern isn't year one or even year two. It's 2028-29, when Brown will earn $69.1 million at age 32. NBA history is not kind to guards earning max money in their early 30s. And there's no no-trade clause — the Celtics preserved the right to move him if things go sideways.</p>
+    <div class="work-box">
+      <div class="work-box-label">Show Your Work</div>
+      <div class="work-box-number">$2.13M</div>
+      <div class="work-box-desc">Per win share in the 2025-26 season. The league average for max-contract players runs approximately $2.40M per win share. Brown is currently producing below that threshold cost — meaning he's beating the market rate right now. The question is whether he still does in year four at $69M. Source: Basketball Reference / Spotrac.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#007A33">Fair Deal</div>
+      </div>
+      <div class="verdict-box-desc">Year one looked shaky. Year two he's the best player on a defending champion. He's currently beating the market on a cost-per-win-share basis. The back end of this deal — $69M in 2029 — is the real risk. Check back in 2027.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating below on Instagram: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#007A33">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Deshaun Watson -->
+<div class="article-view" id="article-watson" style="--article-accent:#FF3C00; --article-accent-bg:#1a0800">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NFL · Cleveland Browns · March 2022</span>
+      <span class="card-verdict cv-dead">Dead Money</span>
+    </div>
+    <div class="article-amount">$230M.</div>
+    <div class="article-headline">Fully guaranteed. 12 games played. No exit.</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">5 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$230M</div><div class="stat-cell-lbl">Fully guaranteed</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$46M</div><div class="stat-cell-lbl">Per year</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">12</div><div class="stat-cell-lbl">Games played since signing</div></div>
+    </div>
+    <p>In March 2022, the Cleveland Browns signed Deshaun Watson to the only fully guaranteed quarterback contract in NFL history. Every dollar. Guaranteed. No performance clauses. No injury outs. $230 million, locked in, regardless of what happened next.</p>
+    <p>What happened next was twelve games, two major injuries, and a contract the Browns cannot escape under any circumstances.</p>
+    <h2><span class="h-accent">The Bull Case</span> — the best argument we could find</h2>
+    <p>Before the suspension, Watson was a legitimate top-five quarterback. The Browns needed a franchise QB. They paid market rate for the player Watson was in 2022. Fully guaranteed contracts protect players — and that principle matters in a league where careers end without warning.</p>
+    <p>That's the entire bull case. It's not a long list.</p>
+    <div class="pull-quote"><p>"The Browns paid for 2022 Watson. They got 12 games."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — where to begin</h2>
+    <p>Watson has appeared in 12 games since signing. That's it. Shoulder surgery, back issues — the body has failed him repeatedly. And because every dollar is fully guaranteed, the Browns cannot cut him, cannot trade him (no team will absorb this deal), and cannot create meaningful cap space while he sits.</p>
+    <p>The dead cap math is the most brutal part: if Cleveland releases Watson, $230M counts as immediate dead cap acceleration. They are trapped. There is no version of this where Cleveland wins.</p>
+    <div class="work-box" style="--article-accent:#FF3C00; --article-accent-bg:#1a0800; border-color:#FF3C00;">
+      <div class="work-box-label" style="color:#FF8C6A">Show Your Work</div>
+      <div class="work-box-number">$19.2M</div>
+      <div class="work-box-desc">Per game played since signing. The average franchise quarterback costs $5-8M per game on their cap hit. Watson costs 2.4 times that — for 12 games. That is not a salary. That is a ransom. Source: Spotrac / Over The Cap.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#FF3C00">Dead Money</div>
+      </div>
+      <div class="verdict-box-desc">The textbook definition. Worst financial commitment in modern NFL history. $19.2M per game played. No escape route. Not close.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#FF3C00">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Saquon Barkley -->
+<div class="article-view" id="article-barkley" style="--article-accent:#004C54; --article-accent-bg:#001a1f">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NFL · Philadelphia Eagles · July 2024</span>
+      <span class="card-verdict cv-pay">Pay Him</span>
+    </div>
+    <div class="article-amount">$37.75M/yr.</div>
+    <div class="article-headline">Everyone said it was insane. Then he ran for 2,005 yards.</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">3 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$113M</div><div class="stat-cell-lbl">Total value</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$37.75M</div><div class="stat-cell-lbl">Per year</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">SB LIX</div><div class="stat-cell-lbl">Year 1 result</div></div>
+    </div>
+    <p>When the Eagles signed Saquon Barkley in July 2024, the football analytics world collectively lost its mind. Paying a running back $37.75M per year — highest ever at the position — felt like market inefficiency in the wrong direction. The conventional wisdom said running backs are replaceable. The data said don't overpay the position.</p>
+    <p>Then Barkley ran for 2,005 yards, won the NFL rushing title, and collected a Super Bowl ring. The conventional wisdom needed to recalculate.</p>
+    <h2><span class="h-accent">The Bull Case</span> — 2,005 yards says it all</h2>
+    <p>Barkley was the best running back in football in 2024. Not one of the best — the best. He won the rushing title. He helped carry Philadelphia to a championship. At 28 years old at signing, he was entering what should be his prime years, not his decline.</p>
+    <p>The Eagles also had no comparable replacement available. This wasn't an overpay for a fungible asset — it was market rate for an irreplaceable player at a critical moment.</p>
+    <div class="pull-quote"><p>"2,005 rushing yards erased every argument against this contract."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — the clock is ticking</h2>
+    <p>Running backs age fast. Barkley turns 29 this year, and NFL history is littered with backs who fell off a cliff right around this age. The Eagles are locked into year 3 of this deal at $37.75M — and that's the one that could hurt.</p>
+    <div class="work-box" style="border-color:#004C54; --article-accent-bg:#001a1f;">
+      <div class="work-box-label" style="color:#A5ACAF">Show Your Work</div>
+      <div class="work-box-number">$18,800</div>
+      <div class="work-box-desc">Cost per rushing yard in 2024. League average for elite running back production runs approximately $28,000 per rushing yard at comparable salary levels. Barkley came in 33% below market rate — on the contract everyone called insane. The Eagles won this negotiation. Source: Pro Football Reference / Spotrac.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#004C54">Pay Him</div>
+      </div>
+      <div class="verdict-box-desc">Year 1 was a statement. $18,800 per rushing yard — 33% below market. The Eagles won this deal in 2024. The question is year 3. Check back in 2026.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#004C54">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Steph Curry -->
+<div class="article-view" id="article-curry" style="--article-accent:#FFC72C; --article-accent-bg:#1a1400">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NBA · Golden State Warriors · 2023</span>
+      <span class="card-verdict cv-fair">Fair Deal</span>
+    </div>
+    <div class="article-amount">$59.6M.</div>
+    <div class="article-headline">Legend tax, or the franchise still getting value at 37?</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">4 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$215M</div><div class="stat-cell-lbl">Total value</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$59.6M</div><div class="stat-cell-lbl">Year 4 salary</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">38</div><div class="stat-cell-lbl">Age in final year</div></div>
+    </div>
+    <p>In any other sport, paying a 37-year-old $59.6 million would be the beginning of the end conversation. In the NBA, when that 37-year-old is Stephen Curry — four rings, two MVPs, the greatest shooter who ever played — the math changes.</p>
+    <p>But does it change enough to justify 38% of Golden State's cap on a single player with no title window in sight?</p>
+    <h2><span class="h-accent">The Bull Case</span> — the greatest shooter alive</h2>
+    <p>Curry is still averaging 26+ points per night and shooting above 40% from three at age 37. That's not a decline — that's sustained elite performance at an age where most players have retired or become role players. The Warriors don't just benefit from his basketball; they benefit from his revenue generation. He fills arenas even in losing seasons.</p>
+    <div class="pull-quote"><p>"Steph Curry isn't a team-building decision. He's a franchise decision."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — the age cliff hits without warning</h2>
+    <p>No one predicts the age cliff until it arrives. Curry is 38% of Golden State's cap with no title window in sight. Klay Thompson is gone. Draymond Green is aging. The team being built around Curry cannot win a championship, and the cap is too constrained to significantly upgrade it while he's being paid like this.</p>
+    <div class="work-box" style="border-color:#FFC72C; --article-accent-bg:#1a1400;">
+      <div class="work-box-label" style="color:#FFC72C">Show Your Work</div>
+      <div class="work-box-number">38%</div>
+      <div class="work-box-desc">Of the Warriors' salary cap committed to one player. League average for max-contract stars sits between 25-30% of cap. Curry is 8-13 percentage points above that floor. Sustainable cap management? No. Worth it to the Warriors brand and revenue? Almost certainly yes. Source: Spotrac / Basketball Reference.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#FFC72C">Fair Deal</div>
+      </div>
+      <div class="verdict-box-desc">Years 1-3 worth every dollar. Year 4 at $59.6M could hurt badly if the age cliff arrives. Circle 2025-26. Watch closely.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#FFC72C">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Luka Doncic -->
+<div class="article-view" id="article-luka" style="--article-accent:#552583; --article-accent-bg:#200a35">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NBA · Los Angeles Lakers · 2024</span>
+      <span class="card-verdict cv-pay">Pay Him</span>
+    </div>
+    <div class="article-amount">$346M.</div>
+    <div class="article-headline">New team. Same bag. Is the contract the problem?</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">5 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$346M</div><div class="stat-cell-lbl">Total value</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$69.2M</div><div class="stat-cell-lbl">Per year average</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">26</div><div class="stat-cell-lbl">Age at signing</div></div>
+    </div>
+    <p>Luka Doncic signed the largest contract in NBA history and then got traded to the Los Angeles Lakers — the contract came with him. $346 million. Five years. Now running the offense for the most storied franchise in basketball, at age 26, with the best years of his career still ahead of him.</p>
+    <p>The contract debate is easy. The roster debate is harder.</p>
+    <h2><span class="h-accent">The Bull Case</span> — generational talent at 26</h2>
+    <p>Career averages: 26 points, 8 rebounds, 8 assists. At 26 years old. There are perhaps three players in NBA history with those career numbers — Oscar Robertson, Magic Johnson, and Luka Doncic. You pay that talent whatever it asks. No argument.</p>
+    <div class="pull-quote"><p>"The contract is fine. The front office has work to do."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — three seasons in Dallas produced zero conference finals</h2>
+    <p>Luka's Dallas teams never reached the conference finals in his peak years. Questions about conditioning have followed him throughout his career. And at $69.2M per year, the Lakers have extremely limited flexibility to build a championship-caliber roster around him. You cannot win with one player at this price — you need two.</p>
+    <div class="work-box" style="border-color:#552583; --article-accent-bg:#200a35;">
+      <div class="work-box-label" style="color:#FDB927">Show Your Work</div>
+      <div class="work-box-number">26/8/8</div>
+      <div class="work-box-desc">Career averages in points, rebounds, and assists. NBA players with those career numbers: Oscar Robertson, Magic Johnson, and Luka Doncic. You pay generational talent generational money. The contract is not the Lakers' problem. Building around a $69M anchor without destroying cap flexibility — that is the problem. Source: Basketball Reference.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#FDB927">Pay Him</div>
+      </div>
+      <div class="verdict-box-desc">The contract is fine. 26/8/8 at 26 years old — you pay it whatever it asks. The Lakers' front office has work to do. That's a different problem.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#552583">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Tyreek Hill -->
+<div class="article-view" id="article-tyreek" style="--article-accent:#008E97; --article-accent-bg:#001a1d">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NFL · Miami Dolphins · Bad Math</span>
+      <span class="card-verdict cv-over">Overpaid</span>
+    </div>
+    <div class="article-amount">$40,924.</div>
+    <div class="article-headline">Per receiving yard. Last 7 games. He wants a raise.</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">17</div><div class="stat-cell-lbl">Catches, last 7 games</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">303</div><div class="stat-cell-lbl">Receiving yards</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$30M</div><div class="stat-cell-lbl">Annual salary</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$40,924</div><div class="stat-cell-lbl">Per yard in that stretch</div></div>
+    </div>
+    <p>Bad Math is simple. You take an ugly number, show the calculation, and let the math speak. Tyreek Hill gives us one of the cleanest Bad Math cases in recent NFL history.</p>
+    <p>17 catches in his last 7 games. Tyreek Hill is making $30M per year. And he's told the Dolphins he wants more.</p>
+    <h2><span class="h-accent">The Math</span> — this is what we mean by bad math</h2>
+    <p>$30M per year across a 17-game season works out to approximately $1.76M per game. Stretch that across 7 games and you get $12.4M in salary allocated to 303 receiving yards and 17 catches.</p>
+    <p>303 yards. $12.4M. That's $40,924 per receiving yard.</p>
+    <div class="pull-quote"><p>"Elite wide receivers average around $8,000 per receiving yard at comparable salary levels. Hill ran 5× that. This is Bad Math."</p></div>
+    <div class="work-box" style="border-color:#FC4C02; --article-accent-bg:#1a0800;">
+      <div class="work-box-label" style="color:#FC4C02">Show Your Work</div>
+      <div class="work-box-number">5×</div>
+      <div class="work-box-desc">The multiple by which Hill's cost-per-receiving-yard exceeded the elite WR market rate over his last 7 games. Elite receivers at comparable salary levels average approximately $8,000 per receiving yard. Hill's stretch came in at $40,924. That's not a slump. That's a different player at the same price. Source: Pro Football Reference / Spotrac.</div>
+    </div>
+    <h2><span class="h-accent">The Verdict</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#FC4C02">Overpaid</div>
+      </div>
+      <div class="verdict-box-desc">He was worth $30M/yr in 2022. The Dolphins are paying for a player that no longer fully exists. And he wants a raise. Bad math. Full stop.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#008E97">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<!-- Micah Parsons -->
+<div class="article-view" id="article-parsons" style="--article-accent:#869397; --article-accent-bg:#0a0f18">
+  <div class="article-hero">
+    <button class="article-back" onclick="closeArticle()">← All Ratings</button>
+    <div class="article-eyebrow">
+      <span class="article-league">NFL · Dallas Cowboys · Contract Watch</span>
+      <span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch This Space</span>
+    </div>
+    <div class="article-amount">$42M/yr.</div>
+    <div class="article-headline">Our fair value model. Cowboys history says: they'll pay eventually.</div>
+    <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
+  </div>
+  <div class="article-content">
+    <div class="stats-block">
+      <div class="stat-cell"><div class="stat-cell-val">57</div><div class="stat-cell-lbl">Career sacks</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">13.4%</div><div class="stat-cell-lbl">Career pressure rate</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$45M</div><div class="stat-cell-lbl">Parsons' reported ask</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$42M</div><div class="stat-cell-lbl">Our fair value estimate</div></div>
+    </div>
+    <p>Micah Parsons is the fastest player in NFL history to 50 career sacks. He has a 13.4% career pressure rate — elite by any measure. He has made multiple All-Pro teams. He is, by most accounts, the best edge rusher in professional football.</p>
+    <p>He is in the final year of his rookie contract and he wants to be the highest-paid non-quarterback in NFL history.</p>
+    <h2><span class="h-accent">The Market</span> — where the comps land</h2>
+    <p>Aidan Hutchinson reset the market at $45M per year with Detroit. Myles Garrett sits at $40M. Maxx Crosby at $38.75M. TJ Watt, who has a reasonable argument as the best defensive player in football, was at $28M before his recent extension.</p>
+    <p>Parsons wants above Hutchinson. The Cowboys have been quiet. This is peak Dallas front office behavior — drag it out, act like they might not pay, then pay him anyway right before the season.</p>
+    <div class="pull-quote"><p>"57 sacks in 4 seasons. The résumé is undeniable. The Cowboys are just being Cowboys."</p></div>
+    <div class="work-box" style="border-color:#869397; --article-accent-bg:#0a0f18;">
+      <div class="work-box-label" style="color:#c0c6c9">Show Your Work — our fair value model</div>
+      <div class="work-box-number">$42M/yr</div>
+      <div class="work-box-desc">Contract Year fair value estimate. Methodology: pressure rate percentile vs. comparable deals signed at same position tier since 2022, adjusted for age (Parsons is 25) and injury history (missed time in 2024). Result: above Garrett's $40M floor, below Hutchinson's $45M ceiling. The Cowboys should pay $42-45M. Source: Spotrac / PFF.</div>
+    </div>
+    <h2><span class="h-accent">No Verdict Yet</span></h2>
+    <div class="verdict-box">
+      <div>
+        <div class="verdict-box-label">Contract Year Rating</div>
+        <div class="verdict-box-text" style="color:#869397">Watch This Space</div>
+      </div>
+      <div class="verdict-box-desc">No verdict until ink dries. The deal gets done at $43-45M or Parsons plays 2025 furious. Either way — we rate it the day it drops. Follow @contractyearhq so you don't miss it.</div>
+    </div>
+    <div class="engage-row">
+      <strong>Follow for the verdict the day it drops:</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#869397">@contractyearhq →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── FILTER LOGIC ─────────────────────────────────────────────
+const activeFilters = { verdict: 'all', sport: 'all' };
+
+function setFilter(type, value, btn) {
+  activeFilters[type] = value;
+  // Update active button in group
+  const group = btn.closest('.filter-group');
+  group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  runFilters();
+}
+
+function runFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase().trim();
+  const verdict = activeFilters.verdict;
+  const sport = activeFilters.sport;
+  const cards = document.querySelectorAll('#articles-grid [data-player]');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const cv = card.dataset.verdict;
+    const cs = card.dataset.sport;
+    const cp = card.dataset.player;
+    const verdictMatch = verdict === 'all' || cv === verdict;
+    const sportMatch = sport === 'all' || cs === sport;
+    const searchMatch = !search || cp.includes(search);
+    const show = verdictMatch && sportMatch && searchMatch;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Handle featured card spanning: if hidden, collapse its grid-column
+  const featured = document.querySelector('.featured-card');
+  if (featured) {
+    featured.style.gridColumn = featured.style.display === 'none' ? '' : '1 / -1';
+  }
+
+  document.getElementById('filter-results').textContent = `Showing ${visible} of ${cards.length}`;
+  document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+  document.getElementById('articles-grid').style.display = visible === 0 ? 'none' : '';
+}
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.article-view').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showArticle(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.article-view').forEach(a => a.classList.remove('active'));
+  document.getElementById('article-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function closeArticle() {
+  document.querySelectorAll('.article-view').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Prevent default on all internal nav links
+document.querySelectorAll('a[onclick]').forEach(a => {
+  a.addEventListener('click', e => e.preventDefault());
+});
+</script>
+</body>
+</html>

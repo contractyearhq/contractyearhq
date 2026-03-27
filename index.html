@@ -662,7 +662,7 @@ footer {
     </div>
     <div class="hero-stat-row">
       <div>
-        <div class="hero-stat-num">8</div>
+        <div class="hero-stat-num">7</div>
         <div class="hero-stat-lbl">Contracts Rated</div>
       </div>
       <div>
@@ -679,7 +679,7 @@ footer {
   <!-- Latest -->
   <div class="section-header">
     <span class="section-title">Latest Ratings</span>
-    <span class="section-count" id="total-count">8 contracts rated</span>
+    <span class="section-count" id="total-count">7 contracts rated</span>
   </div>
 
   <!-- Filter Bar -->
@@ -699,7 +699,7 @@ footer {
       <button class="filter-btn nfl" data-sport="nfl" onclick="setFilter('sport','nfl',this)">NFL</button>
       <button class="filter-btn nba" data-sport="nba" onclick="setFilter('sport','nba',this)">NBA</button>
     </div>
-    <span class="filter-results" id="filter-results">Showing 8 of 8</span>
+    <span class="filter-results" id="filter-results">Showing 7 of 7</span>
   </div>
 
   <div class="articles-grid" id="articles-grid">
@@ -806,17 +806,17 @@ footer {
       <span class="card-read">Read the breakdown →</span>
     </div>
 
-    <!-- Parsons -->
-    <div class="article-card" style="--card-accent:#869397"
-         data-verdict="watch" data-sport="nfl" data-player="micah parsons"
-         onclick="showArticle('parsons')">
+    <!-- Garrett -->
+    <div class="article-card" style="--card-accent:#FF3C00"
+         data-verdict="fair" data-sport="nfl" data-player="myles garrett"
+         onclick="showArticle('garrett')">
       <div class="card-meta">
-        <span class="card-league">NFL · Dallas Cowboys · Contract Watch</span>
-        <span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch This Space</span>
+        <span class="card-league">NFL · Cleveland Browns</span>
+        <span class="card-verdict cv-fair">Fair Deal</span>
       </div>
-      <div class="card-amount">$42M/yr</div>
-      <div class="card-player">Micah Parsons — our fair value estimate</div>
-      <div class="card-desc">57 sacks in 4 years. The fastest to 50 in NFL history. He wants $45M+. We built the comp model from scratch and landed on a number. Cowboys history says they'll drag it out, then pay anyway.</div>
+      <div class="card-amount">$40M/yr</div>
+      <div class="card-player">Myles Garrett — 5 years, $160M</div>
+      <div class="card-desc">The best defensive player in football on the worst team in football. $40M per year, no way out, and zero playoff appearances. The production is there. The wins aren't. We ran the math anyway.</div>
       <span class="card-read">Read the breakdown →</span>
     </div>
 
@@ -896,12 +896,12 @@ footer {
       <div class="ratings-cell">2022</div>
       <div class="ratings-cell"><span class="card-verdict cv-over">Overpaid</span></div>
     </div>
-    <div class="ratings-row" onclick="showArticle('parsons')">
-      <div class="ratings-cell"><div><div class="ratings-player">Micah Parsons</div><div class="ratings-team">Dallas Cowboys</div></div></div>
-      <div class="ratings-cell"><div class="ratings-amount">TBD</div></div>
+    <div class="ratings-row" onclick="showArticle('garrett')">
+      <div class="ratings-cell"><div><div class="ratings-player">Myles Garrett</div><div class="ratings-team">Cleveland Browns</div></div></div>
+      <div class="ratings-cell"><div class="ratings-amount">$160M</div></div>
       <div class="ratings-cell">NFL</div>
-      <div class="ratings-cell">2025</div>
-      <div class="ratings-cell"><span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch</span></div>
+      <div class="ratings-cell">2023</div>
+      <div class="ratings-cell"><span class="card-verdict cv-fair">Fair Deal</span></div>
     </div>
   </div>
   <footer>
@@ -1247,46 +1247,49 @@ footer {
 </div>
 
 <!-- Micah Parsons -->
-<div class="article-view" id="article-parsons" style="--article-accent:#869397; --article-accent-bg:#0a0f18">
+<div class="article-view" id="article-garrett" style="--article-accent:#FF3C00; --article-accent-bg:#1a0800">
   <div class="article-hero">
     <button class="article-back" onclick="closeArticle()">← All Ratings</button>
     <div class="article-eyebrow">
-      <span class="article-league">NFL · Dallas Cowboys · Contract Watch</span>
-      <span class="card-verdict" style="background:rgba(134,147,151,0.15);color:#869397">Watch This Space</span>
+      <span class="article-league">NFL · Cleveland Browns · March 2023</span>
+      <span class="card-verdict cv-fair">Fair Deal</span>
     </div>
-    <div class="article-amount">$42M/yr.</div>
-    <div class="article-headline">Our fair value model. Cowboys history says: they'll pay eventually.</div>
+    <div class="article-amount">$160M.</div>
+    <div class="article-headline">The best defensive player in football. The worst team in football. We ran the math.</div>
     <div class="article-byline">Contract Year · @contractyearhq · Show your work.</div>
   </div>
   <div class="article-content">
     <div class="stats-block">
-      <div class="stat-cell"><div class="stat-cell-val">57</div><div class="stat-cell-lbl">Career sacks</div></div>
-      <div class="stat-cell"><div class="stat-cell-val">13.4%</div><div class="stat-cell-lbl">Career pressure rate</div></div>
-      <div class="stat-cell"><div class="stat-cell-val">$45M</div><div class="stat-cell-lbl">Parsons' reported ask</div></div>
-      <div class="stat-cell"><div class="stat-cell-val">$42M</div><div class="stat-cell-lbl">Our fair value estimate</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">5 yrs</div><div class="stat-cell-lbl">Length</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$160M</div><div class="stat-cell-lbl">Total value</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">$40M</div><div class="stat-cell-lbl">Per year</div></div>
+      <div class="stat-cell"><div class="stat-cell-val">0</div><div class="stat-cell-lbl">Playoff appearances since signing</div></div>
     </div>
-    <p>Micah Parsons is the fastest player in NFL history to 50 career sacks. He has a 13.4% career pressure rate — elite by any measure. He has made multiple All-Pro teams. He is, by most accounts, the best edge rusher in professional football.</p>
-    <p>He is in the final year of his rookie contract and he wants to be the highest-paid non-quarterback in NFL history.</p>
-    <h2><span class="h-accent">The Market</span> — where the comps land</h2>
-    <p>Aidan Hutchinson reset the market at $45M per year with Detroit. Myles Garrett sits at $40M. Maxx Crosby at $38.75M. TJ Watt, who has a reasonable argument as the best defensive player in football, was at $28M before his recent extension.</p>
-    <p>Parsons wants above Hutchinson. The Cowboys have been quiet. This is peak Dallas front office behavior — drag it out, act like they might not pay, then pay him anyway right before the season.</p>
-    <div class="pull-quote"><p>"57 sacks in 4 seasons. The résumé is undeniable. The Cowboys are just being Cowboys."</p></div>
-    <div class="work-box" style="border-color:#869397; --article-accent-bg:#0a0f18;">
-      <div class="work-box-label" style="color:#c0c6c9">Show Your Work — our fair value model</div>
-      <div class="work-box-number">$42M/yr</div>
-      <div class="work-box-desc">Contract Year fair value estimate. Methodology: pressure rate percentile vs. comparable deals signed at same position tier since 2022, adjusted for age (Parsons is 25) and injury history (missed time in 2024). Result: above Garrett's $40M floor, below Hutchinson's $45M ceiling. The Cowboys should pay $42-45M. Source: Spotrac / PFF.</div>
+    <p>In March 2023, Myles Garrett signed a five-year, $160M extension with the Cleveland Browns — the richest contract ever for a non-quarterback at the time. He is, by most serious evaluations, the best defensive player in professional football. 98.5 career sacks. A 13%+ career pressure rate. Multiple Defensive Player of the Year awards. The résumé is not debatable.</p>
+    <p>The team around him, however, very much is.</p>
+    <h2><span class="h-accent">The Bull Case</span> — generational defender, market rate deal</h2>
+    <p>Garrett was the clear top-of-market edge rusher when he signed. Since then, Aidan Hutchinson has reset the position at $45M per year, making $40M look like a relative bargain in hindsight. Garrett's pressure rate, sack totals, and run-stopping ability are all elite — he does things that move the needle on both passing and running downs. If you have him, you pay him.</p>
+    <p>The Browns also had limited options. Letting Garrett walk into free agency or forcing a holdout on a player of this caliber would have been front-office malpractice regardless of what the roster looked like around him.</p>
+    <div class="pull-quote"><p>"$40M for the best edge rusher in football is not the Browns' problem. The Browns' problem is everything else."</p></div>
+    <h2><span class="h-accent">The Bear Case</span> — elite player, zero leverage on outcomes</h2>
+    <p>Here's the uncomfortable math: Garrett has never played a playoff game as a Brown. Zero postseason appearances across his entire career. Cleveland has cycled through quarterbacks, coaches, and front office regimes while Garrett has remained the one constant — and it hasn't mattered.</p>
+    <p>At $40M per year eating a massive chunk of Cleveland's cap, the Browns have consistently lacked the flexibility to build a legitimate roster around him. Defensive brilliance is devalued when the offense can't sustain drives. The deal isn't bad. The deployment of cap resources around it has been.</p>
+    <div class="work-box" style="border-color:#FF3C00;">
+      <div class="work-box-label" style="color:#FF8C6A">Show Your Work</div>
+      <div class="work-box-number">$1.63M</div>
+      <div class="work-box-desc">Per sack since signing. Garrett has averaged roughly 11.5 sacks per 17-game season over the life of this contract. At $40M per year, that's $1.63M per sack — compared to a market average of approximately $2.1M per sack for top-tier edge rushers on comparable deals. Garrett is beating the market on cost-per-sack. The Browns are losing anyway. Source: Pro Football Reference / Spotrac.</div>
     </div>
-    <h2><span class="h-accent">No Verdict Yet</span></h2>
+    <h2><span class="h-accent">The Verdict</span></h2>
     <div class="verdict-box">
       <div>
         <div class="verdict-box-label">Contract Year Rating</div>
-        <div class="verdict-box-text" style="color:#869397">Watch This Space</div>
+        <div class="verdict-box-text" style="color:#FF3C00">Fair Deal</div>
       </div>
-      <div class="verdict-box-desc">No verdict until ink dries. The deal gets done at $43-45M or Parsons plays 2025 furious. Either way — we rate it the day it drops. Follow @contractyearhq so you don't miss it.</div>
+      <div class="verdict-box-desc">$1.63M per sack — below market rate. The production justifies every dollar. The Browns' failure to build around him is a roster construction problem, not a contract problem. Garrett is fine. Cleveland is not.</div>
     </div>
     <div class="engage-row">
-      <strong>Follow for the verdict the day it drops:</strong><br>
-      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#869397">@contractyearhq →</a>
+      <strong>Agree?</strong> Drop your rating: <strong>Pay Him · Fair Deal · Overpaid · Dead Money</strong><br>
+      <a href="https://instagram.com/contractyearhq" target="_blank" style="color:#FF3C00">@contractyearhq →</a>
     </div>
   </div>
 </div>
